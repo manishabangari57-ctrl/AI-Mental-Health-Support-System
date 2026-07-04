@@ -1,4 +1,4 @@
-# 🧠 The Hope – AI-Powered Mental Health Support System
+# 🧠 The Hope – AI-Assisted Mental Health Support System
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
 ![Django](https://img.shields.io/badge/Django-Framework-darkgreen?logo=django)
