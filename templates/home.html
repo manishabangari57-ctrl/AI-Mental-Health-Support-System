@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hope | Your Space</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Hybrid Wood & Light Orange Palette */
+            --wood-deep: #2d1b0e;         /* Dark Mahogany */
+            --wood-medium: #78350f;       /* Warm Cedar */
+            --orange-glow: #ffedd5;       /* Very Light Sunset Orange */
+            --accent: #fb923c;            /* Bright Honey Orange */
+            --card-bg: rgba(255, 255, 255, 0.95); 
+            --text-bright: #431407;       /* Deep Earthy Brown */
+            --text-dim: #7c2d12;
+        }
+
+        * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            /* WOOD & ORANGE GRADIENT COMBINATION */
+            background: radial-gradient(circle at center, var(--orange-glow) 0%, #fed7aa 40%, #78350f 100%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Subtle Wood Grain Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(120, 53, 15, 0.1);
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--wood-medium);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            position: relative;
+            z-index: 1;
+            padding: 100px 5% 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--wood-deep);
+            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            font-weight: 500;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--wood-medium);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(120, 53, 15, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            background: var(--wood-deep);
+            box-shadow: 0 15px 35px rgba(120, 53, 15, 0.4);
+        }
+
+        .logout-btn{
+background:none;
+border:none;
+cursor:pointer;
+font-weight:700;
+color:#7c2d12;   /* match your nav text */
+margin-left:25px;
+font-size:0.9rem;
+}
+
+.logout-btn:hover{
+color:#fb923c;
+}
+
+        /* ---------- FEATURES ---------- */
+        .features-section {
+            position: relative;
+            z-index: 1;
+            padding: 60px 8% 100px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .feature-card {
+            padding: 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(120, 53, 15, 0.15);
+        }
+
+        .icon-box {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            color: var(--wood-deep);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px;
+            color: white;
+            background: rgba(45, 27, 14, 0.8);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="brand">🌱 TheHope</a>
+        <div class="nav-links">
+          
+<a href="/">Home</a>
+
+{% if user.is_authenticated %}
+    <a href="/profile/">Profile</a>
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn">
+        Logout
+    </button>
+</form>
+{% else %}
+    <a href="/signup/">Register</a>
+    <a href="/accounts/login/">Login</a>
+    <a href="/profile/">Profile</a>
+{% endif %}
+
+</div>
+    </nav>
+
+    <section class="hero">
+        <h1>Breathe in. <br>Find your balance.</h1>
+        <p>A warm, organic space for your mental wellness journey. Track your growth with serenity.</p>
+        <a href="{% if user.is_authenticated %}/mood/{% else%}/accounts/login/{%endif %}" class="hero-btn"> Start Your Journey</a>
+    </section>
+
+    <section class="features-section">
+        <div class="features-grid">
+                 <a href="{% if user.is_authenticated %}/mood/{% else %}/accounts/login/{% endif %}" class="feature-card">
+                <span class="icon-box">☀️</span>
+                <h3>Mood Tracker</h3>
+                <p>Observe your emotional patterns with warm, intuitive daily logs.</p>
+            {% if not user.is_authenticated %}
+            <p style="color:#fb923c; font-size:12px;">🔒 Login required</p>
+            {% endif %}
+            </a>
+
+            <a href="{% if user.is_authenticated %}/assessment/{% else %}/accounts/login/{% endif %}" class="feature-card">
+                <span class="icon-box">🪵</span>
+                <h3>Assessments</h3>
+                <p>Rooted in science, our evaluations help you understand your inner landscape.</p>
+                {% if not user.is_authenticated %}
+            <p style="color:#fb923c; font-size:12px;">🔒 Login required</p>
+            {% endif %}
+            </a>
+
+            <a href="{% if user.is_authenticated %}/ai-mood/{% else %}/accounts/login/{% endif %}" class="feature-card ">
+                <span class="icon-box">🍊</span>
+                <h3>AI Analysis</h3>
+                <p>Gentle guidance powered by intelligence to help you cultivate better habits.</p>
+                {% if not user.is_authenticated %}
+            <p style="color:#fb923c; font-size:12px;">🔒 Login required</p>
+            {% endif %}
+            </a>
+
+            <a href="{% if user.is_authenticated %}/support/{% else %}/accounts/login/{% endif %}" class="feature-card">
+                <span class="icon-box">🤝</span>
+                <h3>Safe Haven</h3>
+                <p>Sturdy professional support for when you need a solid ground to stand on.</p>
+                {% if not user.is_authenticated %}
+            <p style="color:#fb923c; font-size:12px;">🔒 Login required</p>
+            {% endif %}
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        &copy; 2026 TheHope. Rooted in growth, bathed in light.
+    </footer>
+
+</body>
+</html>

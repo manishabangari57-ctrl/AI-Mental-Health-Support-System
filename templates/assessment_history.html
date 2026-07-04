@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheHope | Assessment History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-brown: #8b5e3c;
+            --bg-light-brown: #f5ebe0;
+            --card-text: #432818;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f5ebe0 0%, #e3d5ca 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--card-text);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- HIGH-SPEED CALM EMOJI BACKGROUND --- */
+        .emoji-background {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 5rem;
+            animation: floatUp 6s linear infinite; 
+            opacity: 0;
+            filter: grayscale(10%) brightness(1.1);
+        }
+
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(110vh) translateX(0px) rotate(0deg); 
+                opacity: 0; 
+            }
+            20% { opacity: 0.25; }
+            50% { transform: translateY(45vh) translateX(40px) rotate(180deg); }
+            80% { opacity: 0.25; }
+            100% { 
+                transform: translateY(-25vh) translateX(-20px) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        /* --- HEADER --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(67, 40, 24, 0.1);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .header h1 { color: var(--card-text); font-weight: 800; margin: 0; font-size: 1.4rem; }
+        .header nav a { margin-left: 20px; text-decoration: none; color: var(--card-text); font-weight: 700; font-size: 0.9rem; }
+
+        /* --- CONTENT CONTAINER --- */
+        .assessment-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 35px;
+            box-shadow: 0 20px 50px rgba(67, 40, 24, 0.08);
+            border: 1px solid white;
+        }
+
+        h2 { font-weight: 800; text-align: center; margin-bottom: 30px; font-size: 2.2rem; }
+
+        /* --- TABLE STYLING --- */
+        .history-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .history-table th {
+            padding: 10px 20px;
+            text-align: left;
+            color: var(--primary-brown);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+        }
+
+        .history-table tr td {
+            background: white;
+            padding: 22px 20px;
+            font-weight: 600;
+        }
+
+        .history-table tr td:first-child { border-radius: 20px 0 0 20px; }
+        .history-table tr td:last-child { border-radius: 0 20px 20px 0; text-align: right; }
+
+        .history-table tr:hover td {
+            transform: translateY(-3px);
+            background: #fffcf9;
+            box-shadow: 0 8px 20px rgba(139, 94, 60, 0.12);
+        }
+
+        /* Status Pills */
+        .status-pill {
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: inline-block;
+        }
+        .status-low { background: #dcfce7; color: #166534; }
+        .status-moderate { background: #fef9c3; color: #854d0e; }
+        .status-high { background: #fee2e2; color: #991b1b; }
+
+        /* --- ACTION BUTTON --- */
+        .footer-action { text-align: center; margin: 40px 0 80px 0; }
+        .action-btn {
+            display: inline-block;
+            background: var(--primary-brown);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            box-shadow: 0 10px 25px rgba(139, 94, 60, 0.3);
+        }
+        .action-btn:hover { background: var(--card-text); transform: translateY(-5px); }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="emoji-background" id="emojiContainer"></div>
+
+    <header class="header">
+        <h1>TheHope 🤍</h1>
+        <nav>
+            <a href="/">HOME</a>
+            <a href="/mood/">MOOD TRACKER</a>
+            <a href="/assessment/">ASSESSMENT</a>
+            <a href="/ai-mood">AI INSIGHT</a>
+        </nav>
+    </header>
+
+    <div class="assessment-container">
+        <h2>Your Journey ✨</h2>
+
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Date Recorded</th>
+                    <th style="text-align: right;">Stress Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in assessments %}
+                <tr class="history-row">
+                    <td style="color: #8b5e3c;">{{ a.date|date:"M d, Y • h:i A" }}</td>
+                    <td>
+                        <span class="status-pill status-{{ a.level|lower }}">
+                            {{ a.level|title }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-action">
+        <a href="/assessment/" class="action-btn">Take New Assessment</a>
+    </div>
+
+    <script>
+        // FIXED SET: Light and good emojis for everyone
+        const emojis = ["✨", "🍃", "☁️", "☀️", "🌸", "🌿", "⭐", "🤍"];
+
+        const container = document.getElementById('emojiContainer');
+
+        function createEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'floating-emoji';
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // Random horizontal position
+            emoji.style.left = (Math.random() * 95) + "vw";
+            
+            // Big size for visibility
+            const size = Math.random() * (7 - 4) + 4;
+            emoji.style.fontSize = size + "rem";
+            
+            // Fast duration (4 to 7 seconds)
+            const duration = Math.random() * (7 - 4) + 4;
+            emoji.style.animationDuration = duration + "s";
+
+            container.appendChild(emoji);
+
+            // Cleanup
+            setTimeout(() => { emoji.remove(); }, duration * 1000);
+        }
+
+        // Spawn a new emoji every 350ms
+        setInterval(createEmoji, 350);
+        
+        // Initial burst
+        for(let i=0; i<8; i++) {
+            setTimeout(createEmoji, i * 150);
+        }
+    </script>
+</body>
+</html>

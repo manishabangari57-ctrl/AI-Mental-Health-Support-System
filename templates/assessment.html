@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheHope | Wellness Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-brown: #5d4037;
+            --dark-brown: #451a03;
+            --bg-sunny: #fdfaf7;
+            --card-border: #e3d5ca;
+            --text-main: #2d1b18;
+            --text-muted: #7f5539;
+            
+            /* BRIGHT VIVID RAINBOW */
+            --rb-red: #ff3b3b;
+            --rb-orange: #ff9f0a;
+            --rb-yellow: #ffd60a;
+            --rb-green: #34c759;
+            --rb-blue: #007aff;
+            --rb-indigo: #5856d6;
+            --rb-violet: #af52de;
+        }
+
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background: var(--bg-sunny);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- GLOBAL NAVBAR (LOGO LEFT | LINKS RIGHT) --- */
+        .navbar {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 18px 5%; 
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px); 
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1.5px solid var(--card-border);
+        }
+
+        .logo {
+            color: var(--dark-brown); 
+            margin: 0; 
+            font-size: 1.8rem; 
+            letter-spacing: -1.5px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--dark-brown);
+            opacity: 1;
+        }
+
+        .date-pill {
+            background: var(--dark-brown);
+            color: white;
+            padding: 7px 18px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* --- RAINBOW & RIVER --- */
+        .huge-horizontal-rainbow {
+            position: fixed;
+            top: 32%; left: 0; width: 100%; height: 180px; z-index: 1;
+            opacity: 0.55; pointer-events: none;
+            background: linear-gradient(to bottom, 
+                var(--rb-red), var(--rb-orange), var(--rb-yellow), 
+                var(--rb-green), var(--rb-blue), var(--rb-indigo), var(--rb-violet)
+            );
+            filter: blur(40px); 
+        }
+
+        .river-canvas {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 35vh; 
+            z-index: 2; pointer-events: none;
+        }
+
+        /* --- CONTENT --- */
+        .container { max-width: 600px; margin: auto; padding: 20px; position: relative; z-index: 10; }
+
+        .question-block {
+            margin-top: 20px; margin-bottom: 45px; padding: 35px; 
+            background: rgba(255, 255, 255, 0.98); 
+            border-radius: 30px; border: 1px solid var(--card-border);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.04);
+        }
+
+        /* Question Hover Effect */
+        .question-block:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-brown);
+            box-shadow: 0 20px 50px rgba(93, 64, 55, 0.12);
+        }
+
+        .question-text { font-weight: 800; font-size: 1.25rem; margin-bottom: 25px; display: block; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .options-grid input { display: none; }
+
+        .opt-label {
+            display: block; padding: 18px; background: #fff;
+            border: 2px solid #eee; border-radius: 18px; text-align: center;
+            cursor: pointer; font-weight: 700; color: var(--text-muted);
+        }
+
+        .opt-label:hover { transform: translateY(-3px); border-color: var(--card-border); }
+
+        input:checked + .opt-label { 
+            background: var(--primary-brown); color: white; border-color: var(--primary-brown);
+            transform: scale(0.96);
+        }
+
+        .btn-submit {
+            padding: 22px; background: var(--primary-brown); color: white; border: none;
+            border-radius: 25px; font-weight: 800; width: 100%; cursor: pointer;
+            font-size: 1.25rem; margin-bottom: 200px;
+            box-shadow: 0 10px 30px rgba(93, 64, 55, 0.2);
+        }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .navbar { padding: 15px 20px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="huge-horizontal-rainbow"></div>
+
+    <nav class="navbar">
+        <a href="/" class="logo">TheHope.✨</a>
+
+        <div class="header-right-group">
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/mood/">Mood Tracker</a>
+                <a href="/assessment/" class="active">Assessment</a>
+                <a href="/ai-mood">AI INSIGHT</a>
+            </div>
+            <div class="date-pill" id="current-date"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="text-align: center; margin: 40px 0;">
+            <h2 style="font-size: 2.6rem; margin-bottom: 10px; font-weight: 800;">Wellness Assessment</h2>
+            <p style="color: var(--text-muted); font-weight: 700;">A path of light and deep reflection.</p>
+        </div>
+
+        <form method="POST" id="assessmentForm">
+            {% csrf_token %}
+            
+            <div class="question-block" id="q1">
+                <span class="question-text">1. I find it difficult to calm down after something upsetting.</span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q1" value="0" onclick="autoScroll('q2')"><div class="opt-label">😌 Never</div></label>
+                    <label><input type="radio" name="q1" value="1" onclick="autoScroll('q2')"><div class="opt-label">🙂 Rarely</div></label>
+                    <label><input type="radio" name="q1" value="2" onclick="autoScroll('q2')"><div class="opt-label">😐 Sometimes</div></label>
+                    <label><input type="radio" name="q1" value="3" onclick="autoScroll('q2')"><div class="opt-label">😣 Often</div></label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q2">
+                <span class="question-text">2. I feel like I have very little to look forward to.</span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q2" value="0" onclick="autoScroll('q3')"><div class="opt-label">😌 Never</div></label>
+                    <label><input type="radio" name="q2" value="1" onclick="autoScroll('q3')"><div class="opt-label">🙂 Rarely</div></label>
+                    <label><input type="radio" name="q2" value="2" onclick="autoScroll('q3')"><div class="opt-label">😐 Sometimes</div></label>
+                    <label><input type="radio" name="q2" value="3" onclick="autoScroll('q3')"><div class="opt-label">😣 Often</div></label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q3">
+                <span class="question-text">3. I experience shakiness or panicky feelings.</span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q3" value="0" onclick="autoScroll('q4')"><div class="opt-label">😌 Never</div></label>
+                    <label><input type="radio" name="q3" value="1" onclick="autoScroll('q4')"><div class="opt-label">🙂 Rarely</div></label>
+                    <label><input type="radio" name="q3" value="2" onclick="autoScroll('q4')"><div class="opt-label">😐 Sometimes</div></label>
+                    <label><input type="radio" name="q3" value="3" onclick="autoScroll('q4')"><div class="opt-label">😣 Often</div></label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q4">
+                <span class="question-text">4. I struggle to find the motivation to begin tasks.</span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q4" value="0" onclick="autoScroll('q5')"><div class="opt-label">😌 Never</div></label>
+                    <label><input type="radio" name="q4" value="1" onclick="autoScroll('q5')"><div class="opt-label">🙂 Rarely</div></label>
+                    <label><input type="radio" name="q4" value="2" onclick="autoScroll('q5')"><div class="opt-label">😐 Sometimes</div></label>
+                    <label><input type="radio" name="q4" value="3" onclick="autoScroll('q5')"><div class="opt-label">😟 Often</div></label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q5">
+                <span class="question-text">5. I have felt that life has become somewhat meaningless.</span>
+                <div class="options-grid">
+                    <label><input type="radio" name="q5" value="0" onclick="autoScroll('submit-btn')"><div class="opt-label">😌 Never</div></label>
+                    <label><input type="radio" name="q5" value="1" onclick="autoScroll('submit-btn')"><div class="opt-label">🙂 Rarely</div></label>
+                    <label><input type="radio" name="q5" value="2" onclick="autoScroll('submit-btn')"><div class="opt-label">😐 Sometimes</div></label>
+                    <label><input type="radio" name="q5" value="3" onclick="autoScroll('submit-btn')"><div class="opt-label">😟 Often</div></label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">Complete Assessment 🧠✨</button>
+        </form>
+    </div>
+
+    <canvas id="riverCanvas" class="river-canvas"></canvas>
+
+    <script>
+        // Date Pill
+        const dateOptions = { month: 'short', day: 'numeric' };
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', dateOptions);
+
+        // River Animation
+        const canvas = document.getElementById('riverCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight * 0.35;
+
+        const waves = [
+            { amplitude: 22, frequency: 0.015, speed: 0.03, opacity: 0.4 },
+            { amplitude: 15, frequency: 0.02, speed: 0.05, opacity: 0.3 }
+        ];
+
+        let time = 0;
+        function drawRiver() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            waves.forEach(wave => {
+                ctx.beginPath();
+                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, `rgba(10, 50, 110, ${wave.opacity})`);
+                gradient.addColorStop(1, `rgba(20, 80, 160, ${wave.opacity + 0.1})`);
+                ctx.fillStyle = gradient;
+                const startY = canvas.height * 0.4;
+                ctx.moveTo(0, startY);
+                for (let x = 0; x <= canvas.width; x += 15) {
+                    const y = startY + wave.amplitude * Math.sin(x * wave.frequency + time * wave.speed);
+                    ctx.lineTo(x, y);
+                }
+                ctx.lineTo(canvas.width, canvas.height);
+                ctx.lineTo(0, canvas.height);
+                ctx.closePath();
+                ctx.fill();
+            });
+            time += 0.04;
+            requestAnimationFrame(drawRiver);
+        }
+        drawRiver();
+
+        function autoScroll(nextId) {
+            setTimeout(() => {
+                const element = document.getElementById(nextId);
+                if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 350);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 0.35;
+        });
+    </script>
+</body>
+</html>

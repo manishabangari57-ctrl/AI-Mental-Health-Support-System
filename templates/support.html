@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | TheHope</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-orange: #f97316; /* Vibrant Orange */
+            --dark-orange: #c2410c;    /* Deep Burnt Orange */
+            --bg-creamy: #fff7ed;      /* Soft Orange-Tinted Background */
+            --card-border: #fed7aa;
+            --text-main: #431407;
+            --text-muted: #9a3412;
+            --emergency-red: #ef4444;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background-color: var(--bg-creamy); /* ORANGE BACKGROUND */
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        .navbar {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 18px 8%; 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); 
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .logo {
+            color: var(--dark-orange); 
+            margin: 0; 
+            font-size: 1.8rem; 
+            letter-spacing: -1.5px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 25px;
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- SUPPORT CARD --- */
+        .card {
+            background: white;
+            padding: 45px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 40px;
+            border: 2px solid var(--primary-orange);
+            box-shadow: 0 25px 50px rgba(249, 115, 22, 0.1);
+            animation: fadeIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        h2 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark-orange);
+            letter-spacing: -1px;
+        }
+
+        .subtext {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* --- EMERGENCY BOX --- */
+        .emergency {
+            background: #fef2f2;
+            border: 2px solid var(--emergency-red);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .emergency strong {
+            color: var(--emergency-red);
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .emergency b {
+            font-size: 1.2rem;
+            color: #000;
+        }
+
+        /* --- SECTIONS --- */
+        .section {
+            margin-top: 25px;
+            padding: 25px;
+            background: var(--bg-creamy);
+            border-radius: 25px;
+            border: 1px dashed var(--card-border);
+        }
+
+        .section h3 {
+            margin-top: 0;
+            color: var(--dark-orange);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* --- NOTE --- */
+        .note {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 600;
+            opacity: 0.7;
+        }
+
+        /* --- ANIMATION --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RIVER CANVAS --- */
+        .river-canvas {
+            position: fixed; 
+            bottom: 0; left: 0; width: 100%; height: 20vh; 
+            z-index: 2; pointer-events: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">TheHope.✨</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/mood/">Mood</a>
+            <a href="/assessment/">Assessment</a>
+            <a href="/ai-mood/">AI Insight</a>
+            <a href="/profile/">Profile</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>Support & Help 💬</h2>
+            <p class="subtext">You're not alone. Reach out anytime.</p>
+
+            <div class="emergency">
+                <strong>🚨 NEED IMMEDIATE HELP?</strong>
+                Call Emergency: <b>112</b><br>
+                Kiran Helpline: <b>1800-599-0019</b>
+            </div>
+
+            <div class="section">
+                <h3>☎️ Trusted Helplines</h3>
+                <ul>
+                    <li>Kiran Mental Health (Govt. of India): 1800-599-0019</li>
+                    <li>AASRA (24/7 Support): +91-9820466726</li>
+                    <li>Vandrevala Foundation: 1860-266-2345</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>🧠 Right Now...</h3>
+                <ul>
+                    <li>Take 5 slow, deep breaths</li>
+                    <li>Drink a glass of water</li>
+                    <li>Step away from your screen for 5 mins</li>
+                    <li>Message a friend or family member</li>
+                </ul>
+            </div>
+
+            <p class="note">
+                *This platform provides guidance and is not a substitute for professional medical advice.
+            </p>
+        </div>
+    </div>
+
+    <canvas id="riverCanvas" class="river-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('riverCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 0.2;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let time = 0;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(249, 115, 22, 0.15)"; 
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height);
+            for(let x = 0; x <= canvas.width; x += 15) {
+                const y = canvas.height * 0.6 + Math.sin(x * 0.015 + time) * 10;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.fill();
+            time += 0.03;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+
+</body>
+</html>

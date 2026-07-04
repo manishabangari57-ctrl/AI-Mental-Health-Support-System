@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out | TheHope</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-brown: #5d4037;
+            --light-brown: #d7ccc8; /* THE THEME BACKGROUND */
+            --dark-brown: #451a03;
+            --bg-sand: #fdfaf7;
+            --card-border: #e3d5ca;
+            --text-muted: #7f5539;
+        }
+
+        * { box-sizing: border-box; transition: all 0.4s ease; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background-color: var(--light-brown); /* BROWN BACKGROUND */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 18px 8%; 
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1.5px solid var(--card-border);
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark-brown);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* --- LOGOUT CARD --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .card {
+            background: white;
+            padding: 50px;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 40px;
+            border: 2px solid var(--dark-brown);
+            box-shadow: 0 20px 60px rgba(69, 26, 3, 0.15);
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-sand);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+            font-size: 2rem;
+            border: 2px solid var(--card-border);
+        }
+
+        h2 {
+            color: var(--dark-brown);
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .btn-home {
+            display: inline-block;
+            background: var(--dark-brown);
+            color: white;
+            padding: 16px 35px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(69, 26, 3, 0.2);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            background: var(--primary-brown);
+        }
+
+        /* --- RIVER ANIMATION --- */
+        .river-canvas {
+            position: fixed; 
+            bottom: 0; left: 0; width: 100%; height: 25vh; 
+            z-index: 2; pointer-events: none;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="brand">🌱 TheHope.</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/accounts/login/">Login</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="icon-circle">✨</div>
+            <h2>See you soon!</h2>
+            <p>You have been safely logged out of your account. Take a deep breath and have a wonderful rest of your day.</p>
+            
+            <a href="/" class="btn-home">Back to Home</a>
+        </div>
+    </div>
+
+    <canvas id="riverCanvas" class="river-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('riverCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 0.25;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let time = 0;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(69, 26, 3, 0.08)"; 
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height);
+            for(let x = 0; x <= canvas.width; x += 15) {
+                const y = canvas.height * 0.6 + Math.sin(x * 0.012 + time) * 12;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.fill();
+            time += 0.025;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheHope | Assessment Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-brown: #8b5e3c;
+            --bg-light-brown: #f5ebe0;
+            --card-text: #432818;
+            --low-color: #22c55e;
+            --mod-color: #f59e0b;
+            --high-color: #ef4444;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f5ebe0 0%, #e3d5ca 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- LARGE EMOJI BACKGROUND --- */
+        .emoji-background {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 6rem;
+            /* Faster animation speed */
+            animation: floatUp 5s linear infinite; 
+            opacity: 0;
+            filter: grayscale(10%) brightness(1.1);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.18; } 
+            90% { opacity: 0.18; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- HEADER --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            border-bottom: 1px solid rgba(67, 40, 24, 0.1);
+        }
+
+        .header h1 { color: var(--card-text); font-weight: 800; margin: 0; font-size: 1.5rem; }
+        .header nav a { margin-left: 20px; text-decoration: none; color: var(--card-text); font-weight: 700; font-size: 0.9rem; }
+
+        /* --- RESULT CARD --- */
+        .result-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            z-index: 5;
+        }
+
+        .result-card {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 35px;
+            text-align: center;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 20px 40px rgba(67, 40, 24, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .result-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 6px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .result-card.low::after { background: var(--low-color); }
+        .result-card.moderate::after { background: var(--mod-color); }
+        .result-card.high::after { background: var(--high-color); }
+
+        .result-icon { font-size: 85px; margin-bottom: 20px; display: block; }
+        h2 { font-weight: 800; color: var(--card-text); margin: 0 0 10px 0; font-size: 1.9rem; }
+        .result-message { color: #5e503f; line-height: 1.6; margin: 0 0 30px 0; font-size: 1.1rem; }
+
+        .btn-stack { display: flex; flex-direction: column; gap: 15px; }
+        .main-btn {
+            background: var(--primary-brown);
+            color: white;
+            padding: 18px;
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(139, 94, 60, 0.2);
+        }
+        .alt-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .sub-btn {
+            background: #fdfaf7;
+            color: var(--primary-brown);
+            padding: 14px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid #e3d5ca;
+            font-size: 0.9rem;
+        }
+
+        .main-btn:hover { transform: translateY(-3px); background: #6f4a30; }
+    </style>
+</head>
+
+<body>
+    <div class="emoji-background" id="emojiContainer"></div>
+
+    <header class="header">
+        <h1>TheHope 🤍</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/mood/">Mood Tracker</a>
+            <a href="/assessment/">Assessment</a>
+            <a href="/ai-mood">AI INSIGHT</a>
+        </nav>
+    </header>
+
+    <div class="result-container">
+        <div class="result-card {{ result|lower }}">
+            <div class="result-icon">
+                {% if result == "low" %}😊
+                {% elif result == "moderate" %}😐
+                {% else %}😟{% endif %}
+            </div>
+
+            <h2>{{ result|title }} Stress Level</h2>
+            <p class="result-message">{{ message }}</p>
+
+            <div class="btn-stack">
+                <a href="/ai-mood/" class="main-btn">View Full Analysis 📊</a>
+                <div class="alt-btns">
+                    <a href="/assessment/" class="sub-btn">Retake</a>
+                    <a href="/assessment/history/" class="sub-btn">History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const result = "{{ result|lower }}";
+        let emojis = (result === "low") ? ["😌", "✨", "☀️", "🌿", "⭐"] : 
+                     (result === "moderate") ? ["😐", "⏳", "🍂", "🤔", "☁️"] : 
+                     ["😟", "🌧️", "💧", "🕯️", "💭"];
+
+        const container = document.getElementById('emojiContainer');
+
+        function createEmoji(isInitial = false) {
+            const emoji = document.createElement('div');
+            emoji.className = 'floating-emoji';
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            emoji.style.left = (Math.random() * 90) + 5 + "vw";
+            
+            const size = Math.random() * (7 - 4) + 4;
+            emoji.style.fontSize = size + "rem";
+            
+            // Faster travel time: 3 to 6 seconds
+            const duration = Math.random() * (6 - 3) + 3;
+            emoji.style.animationDuration = duration + "s";
+
+            // If it's an initial emoji, start it at a random height so the screen is full immediately
+            if (isInitial) {
+                emoji.style.top = Math.random() * 100 + "vh";
+            }
+
+            container.appendChild(emoji);
+            setTimeout(() => { emoji.remove(); }, duration * 1000);
+        }
+
+        // 1. Initial burst: Create 10 emojis immediately at random heights
+        for(let i=0; i<10; i++) {
+            createEmoji(true);
+        }
+
+        // 2. Continuous stream: Faster interval (250ms)
+        setInterval(() => createEmoji(false), 250);
+    </script>
+</body>
+</html>

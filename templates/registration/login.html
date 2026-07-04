@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TheHope</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-brown: #5d4037;
+            --dark-brown: #451a03;
+            --bg-sand: #fdfaf7; 
+            --card-border: #e3d5ca;
+            --text-main: #2d1b18;
+            --text-muted: #7f5539;
+        }
+
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background-color: var(--bg-sand);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- GLOBAL NAVBAR --- */
+        .navbar {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 18px 8%; 
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px); 
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1.5px solid var(--card-border);
+        }
+
+        .logo {
+            color: var(--dark-brown); 
+            margin: 0; 
+            font-size: 1.8rem; 
+            letter-spacing: -1.5px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .nav-links a:hover {
+            color: var(--dark-brown);
+            opacity: 1;
+        }
+
+        /* --- CENTERED CONTENT --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- LOGIN CARD --- */
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 45px;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 40px;
+            border: 2px solid var(--dark-brown);
+            box-shadow: 0 25px 50px rgba(69, 26, 3, 0.12);
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 35px 80px rgba(69, 26, 3, 0.18);
+        }
+
+        h2 {
+            margin-bottom: 35px;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* --- INPUTS --- */
+        .input-group {
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--dark-brown);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-left: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            margin-top: 8px;
+            border: 2px solid var(--card-border);
+            border-radius: 18px;
+            outline: none;
+            font-family: inherit;
+            font-weight: 600;
+            background: #fff;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        input:focus {
+            border-color: var(--dark-brown);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(69, 26, 3, 0.05);
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 20px;
+            background: var(--dark-brown);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(69, 26, 3, 0.25);
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background-color: var(--primary-brown);
+        }
+
+        .signup-link {
+            display: block;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .signup-link:hover {
+            color: var(--dark-brown);
+            text-decoration: underline;
+        }
+
+        .error-box {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 15px;
+            border: 1px solid #fecaca;
+        }
+
+        /* --- RIVER --- */
+        .river-canvas {
+            position: fixed; 
+            bottom: 0; left: 0; width: 100%; height: 25vh; 
+            z-index: 2; pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">TheHope.✨</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/signup/">Sign Up</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="card">
+            <h2>WELCOME BACK</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="input-group">
+                    <label>Username</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    {{ form.password }}
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+
+            {% if form.errors %}
+                <div class="error-box">
+                    Invalid username or password.
+                </div>
+            {% endif %}
+
+            <a href="/signup/" class="signup-link">New to TheHope? Create an account</a>
+        </div>
+    </div>
+
+    <canvas id="riverCanvas" class="river-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('riverCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 0.25;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let time = 0;
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(69, 26, 3, 0.08)"; 
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height);
+            for(let x = 0; x <= canvas.width; x += 15) {
+                const y = canvas.height * 0.6 + Math.sin(x * 0.012 + time) * 12;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.fill();
+            time += 0.025;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
