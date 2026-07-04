@@ -290,6 +290,12 @@ Cloud deployment (Render/PythonAnywhere) will be added in future versions.
 
 ---
 
+## 👤 Sign Up Page
+
+![Sign Up](screenshots/signup.png)
+
+---
+
 ## 😊 Mood Tracker
 
 ![Mood Tracker](screenshots/mood.png)
@@ -302,15 +308,27 @@ Cloud deployment (Render/PythonAnywhere) will be added in future versions.
 
 ---
 
+## 📋 Assessment Result
+
+![Assessment Result](screenshots/assessment_result.png)
+
+---
+
 ## 🤖 AI Mood Insights
 
 ![AI Insights](screenshots/ai_insights.png)
 
 ---
 
-## 📈 Weekly Mood Dashboard
+## 📊 Mood History Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Mood History Dashboard](screenshots/dashboard.png)
+
+---
+
+## 👤 User Profile
+
+![Profile](screenshots/profile.png)
 
 ---
 
@@ -318,7 +336,7 @@ Cloud deployment (Render/PythonAnywhere) will be added in future versions.
 
 ![Support](screenshots/support.png)
 
----
+
 
 # 🔒 Security Features
 
